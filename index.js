@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth.route");
 const blogRoutes = require("./routes/blog.route");
+const commentRoutes = require("./routes/comment.route");
 const connectDB = require("./config/db");
 
 const app = express();
@@ -19,13 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/user", authRoutes);
 app.use("/api/blog", blogRoutes);
+app.use("/api/comment", commentRoutes);
 
 // Health check
 app.get("/", (req, res) => {
   res.send("API is running");
 });
 
-// Start server
+
 app.listen(PORT, () => {
-  console.log(`✅ Server started at http://localhost:${PORT}`);
+  console.log(`Server started at ${PORT}`);
 });
