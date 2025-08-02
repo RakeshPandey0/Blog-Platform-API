@@ -39,3 +39,5 @@ The API is organized into three main routes:
 * Node.js
 * Express.js
 * MongoDB
+
+#### API documentation: https://documenter.getpostman.com/view/39810500/2sB3BAMCn5
