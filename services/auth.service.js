@@ -8,20 +8,19 @@ function createUserToken(user) {
     email: user.email,
     role: user.role,
   };
-  const token = jwt.sign(payload, process.env.SECRET);
-  return token;
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "1d" });
 }
 
 function validateToken(token) {
   try {
     const payload = jwt.verify(token, process.env.SECRET);
-    return payload;
+    return { valid: true, payload };
   } catch (err) {
-    return new Error(err);
+    return { valid: false, error: err.message };
   }
 }
 
 module.exports = {
-    createUserToken,
-    validateToken,
-}
+  createUserToken,
+  validateToken,
+};
