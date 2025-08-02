@@ -14,9 +14,9 @@ function createUserToken(user) {
 function validateToken(token) {
   try {
     const payload = jwt.verify(token, process.env.SECRET);
-    return { valid: true, payload };
+    return payload;
   } catch (err) {
-    return { valid: false, error: err.message };
+    return { error: err.message };
   }
 }
 
