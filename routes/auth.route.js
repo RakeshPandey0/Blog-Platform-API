@@ -5,8 +5,11 @@ const {
   handleSignup,
   handleSignin,
 } = require("../controllers/auth.controller");
-
-router.post("/signup", handleSignup);
-router.post("/signin", handleSignin);
+const {
+  validateSignup,
+  validateSignin,
+} = require("../validators/userValidator");
+router.post("/signup", validateSignup, handleSignup);
+router.post("/signin", validateSignin, handleSignin);
 
 module.exports = router;

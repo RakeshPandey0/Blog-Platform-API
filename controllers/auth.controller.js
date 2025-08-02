@@ -1,6 +1,18 @@
 const User = require("../models/User");
+const { validationResult } = require("express-validator");
 
 const handleSignup = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      msg: "Validation failed",
+      errors: errors.array().map((err) => ({
+        field: err.param,
+        error: err.msg,
+      })),
+    });
+  }
+
   try {
     const { fullName, email, password, role } = req.body;
 
@@ -19,6 +31,17 @@ const handleSignup = async (req, res) => {
 };
 
 const handleSignin = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      msg: "Validation failed",
+      errors: errors.array().map((err) => ({
+        field: err.param,
+        error: err.msg,
+      })),
+    });
+  }
+
   try {
     const { email, password } = req.body;
     if (!email || !password)
