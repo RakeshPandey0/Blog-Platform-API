@@ -10,7 +10,7 @@ const {
 } = require("../controllers/comment.controller");
 
 router.post("/:blogId", requireLogin, addComment);
-router.get("/:blogId", requireLogin, getComments);
+router.get("/:blogId", getComments);
 router.patch("/:id", requireLogin, updateComment);
 router.delete("/:id", requireLogin, deleteComment);
 
