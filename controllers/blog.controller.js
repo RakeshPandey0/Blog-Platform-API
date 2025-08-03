@@ -25,10 +25,43 @@ const createBlog = async (req, res) => {
 // All blogs
 const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find()
+    const {
+      search,
+      tags,
+      sortBy = "createdAt",
+      order = "desc",
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const filter = {};
+
+    if (search) {
+      filter.title = { $regex: search, $options: "i" };
+    }
+
+    if (tags) {
+      const tagArray = tags.split(",");
+      filter.tags = { $in: tagArray };
+    }
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const sortOrder = order === "asc" ? 1 : -1;
+
+    const blogs = await Blog.find(filter)
       .populate("createdBy", "fullName email")
-      .sort({ createdAt: -1 });
-    res.status(200).json(blogs);
+      .sort({ [sortBy]: sortOrder })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await Blog.countDocuments(filter);
+
+    res.status(200).json({
+      total,
+      count: blogs.length,
+      page: parseInt(page),
+      blogs,
+    });
   } catch (error) {
     res.status(500).json({ msg: "Server error", error: error.message });
   }
