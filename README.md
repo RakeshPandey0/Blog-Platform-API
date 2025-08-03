@@ -1,43 +1,105 @@
-# Blog-Platform-API
+# 📝 Blog-Platform-API
 
-Blog-Platform-API is a backend project developed as an assignment for the EBpearls backend traineeship screening. It is built using Node.js, Express.js, and MongoDB.
+**Blog-Platform-API** is a backend project developed as part of the **EBpearls backend traineeship** screening.  
+It is built using **Node.js**, **Express.js**, and **MongoDB** and supports:
 
-## Installation
+- User authentication via JWT
+- CRUD operations for blogs
+- Commenting on blogs
+- Protected routes for write actions
 
-To set up the project locally, run:
+---
+
+## 🚀 Installation
+
+Clone the repo and install dependencies:
 
 ```bash
 npm install
 ```
 
-## Running the Project
+---
 
-Start the server with either of these commands:
+## 🏃 Running the Project
+
+Start the server using:
 
 ```bash
-
 npm start
 ```
+
 or
+
 ```bash
 node index.js
-
 ```
 
-## API Routes & Features
+---
 
-The API is organized into three main routes:
+## 📁 API Routes & Features
 
-* **Auth**: Handles user authentication (signup, signin).
-* **Blog**: Allows creating, updating, deleting, and fetching blog posts.
-* **Comment**: Supports adding, updating, and deleting comments on blog posts.
+The API is structured into 3 core modules:
 
-> **Note:** Creating, updating, or deleting blogs and comments requires authentication. This is enforced by middleware that validates the user's bearer token.
+* **Auth**: Signup, login with JWT
+* **Blog**: Create, update, delete, and retrieve blogs
+* **Comment**: Add, update, and remove comments on blog posts
 
-## Technologies Used
+> 🔐 **Protected Actions**: Creating, updating, or deleting blogs/comments requires a valid Bearer token passed via the `Authorization` header.
 
-* Node.js
-* Express.js
-* MongoDB
+---
 
-#### API documentation: https://documenter.getpostman.com/view/39810500/2sB3BAMCn5
+## 🧪 Technologies Used
+
+* **Node.js**
+* **Express.js**
+* **MongoDB**
+* **JWT** (Authentication)
+
+---
+
+## 📄 API Documentation
+
+Full Postman Docs: [View here](https://documenter.getpostman.com/view/39810500/2sB3BAMCn5)
+
+### 🔐 Authentication
+
+| Method | Endpoint           | Description             |
+| ------ | ------------------ | ----------------------- |
+| POST   | `/api/user/signup` | Register a new user     |
+| POST   | `/api/user/signin` | Login and receive token |
+| DELETE | `/api/user/:id`    | Remove a user (admin)   |
+| GET    | `/api/user/`       | Get all users           |
+
+---
+
+### 📝 Blog Routes
+
+| Method | Endpoint               | Description            |
+| ------ | ---------------------- | ---------------------- |
+| GET    | `/api/blog/`           | Get all blogs          |
+| POST   | `/api/blog/`           | Create a new blog      |
+| GET    | `/api/blog/:id`        | Get blog by ID         |
+| PATCH  | `/api/blog/:id`        | Update blog            |
+| DELETE | `/api/blog/:id`        | Delete blog            |
+| GET    | `/api/blog?search=...` | Search, sort, paginate |
+
+---
+
+### 💬 Comment Routes
+
+| Method | Endpoint                  | Description                |
+| ------ | ------------------------- | -------------------------- |
+| POST   | `/api/comment/:blogId`    | Add comment to a blog      |
+| GET    | `/api/comment/:blogId`    | Get all comments of a blog |
+| PATCH  | `/api/comment/:commentId` | Update a comment           |
+| DELETE | `/api/comment/:commentId` | Delete a comment           |
+
+---
+
+### 🔑 Protected Routes
+
+All routes that require authentication use this header:
+
+```http
+Authorization: Bearer <your_token>
+```
