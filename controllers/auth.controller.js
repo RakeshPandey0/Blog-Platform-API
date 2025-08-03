@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Blog = require("../models/Blog");
 const { validationResult } = require("express-validator");
 
 const handleSignup = async (req, res) => {
@@ -58,7 +59,41 @@ const handleSignin = async (req, res) => {
   }
 };
 
+const removeUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Only ADMIN can remove users
+    if (req.user.role !== "ADMIN") {
+      return res.status(403).json({ msg: "Only admins can delete users" });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    // Delete all blogs by the user
+    await Blog.deleteMany({ createdBy: user._id });
+
+    // Delete the user
+    await user.deleteOne();
+
+    res.status(200).json({ msg: "User and their blogs deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error", error: error.message });
+  }
+};
+
+const getAllUsers = async(req, res)=>{
+  const users = await User.find({});
+  const total = await User.countDocuments();
+  res.status(200).json({total, users})
+}
+
 module.exports = {
   handleSignin,
   handleSignup,
+  getAllUsers,
+  removeUser,
 };
