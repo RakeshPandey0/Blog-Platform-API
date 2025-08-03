@@ -85,11 +85,15 @@ const removeUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async(req, res)=>{
-  const users = await User.find({});
-  const total = await User.countDocuments();
-  res.status(200).json({total, users})
-}
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    const total = await User.countDocuments();
+    res.status(200).json({ total, users });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 module.exports = {
   handleSignin,
