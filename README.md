@@ -1,6 +1,6 @@
 # 📝 Blog-Platform-API
 
-**Blog-Platform-API** is a backend project developed as part of the **EBpearls backend traineeship** screening.  
+**Blog-Platform-API** is a backend API project for blog platform.
 It is built using **Node.js**, **Express.js**, and **MongoDB** and supports:
 
 - User authentication via JWT
